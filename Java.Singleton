@@ -1,0 +1,21 @@
+package br.exemplo.singleton;
+
+public class MeuSingletonExemplo {
+	
+	private static MeuSingletonExemplo instance;//criando uma instância do tipo MeuSingletonExemplo
+	
+	private MeuSingletonExemplo(){// é um construtor privado, garantindo que nenhuma outra classe poderá criar inadvertidamente uma instância desta.
+	}
+	
+	public static MeuSingletonExemplo getInstance(){//utilizamos o método getInstance(), assim acessaríamos a instância criada através da chamada "MeuSingletonExemplo.getInstance()"
+		
+		if(instance == null){//realizar um teste antes da criação do Singleton e, caso não exista nenhuma, criamos este Singleton senão retorna instance existente
+			synchronized(MeuSingletonExemplo.class){
+				if(instance == null){//Isso resolve o problema da sincronização caso tenha instancia
+				instance = new MeuSingletonExemplo();
+				}
+			}
+		}
+		return instance;//retornamos a instância
+	}
+}
