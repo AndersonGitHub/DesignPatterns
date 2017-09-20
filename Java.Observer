@@ -1,0 +1,183 @@
+package br.exemplo.Observer;
+
+public interface Observer {
+	
+	public void update(Object ob);
+}
+
+
+package br.exemplo.Observer;
+
+public interface Observable {
+	
+	public void registerObserver(Observer observer);
+	
+	public void removeObserver(Observer observer);
+	
+	public void notifyAllObservers();
+}
+
+
+package br.exemplo.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Professor implements Observable{
+	
+	private String[] frases = {"Bom dia aluno!","Vou fazer a chamada!","Alunos dispensados!"};
+	private int contador;
+	
+	private List<Observer>Observadores;
+	
+	public Professor(){
+		this.Observadores = new ArrayList<Observer>();
+		contador = -1;
+	}
+
+
+	public void proximoFrase(){
+		contador++;
+		System.out.println(frases[contador]);
+		notifyAllObservers();
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		Observadores.add(observer);
+		for(Observer ob : Observadores){
+			System.out.println("Sistema: observador" + ob.getClass().getName()+" está registrado.");
+		}
+		System.out.println();
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		Observadores.remove(observer);
+		System.out.println("Sistema: observador" + observer.getClass().getName() + " foi removido");
+		System.out.println();
+	}
+
+	@Override
+	public void notifyAllObservers() {
+		for(Observer ob: Observadores){
+			ob.update(contador);
+		}
+		System.out.println();
+	}
+
+}
+
+package br.exemplo.Observer;
+
+public class AlunaKerolaine implements Observer{
+
+	private String resposta;
+
+	@Override
+	public void update(Object ob) {
+		Integer i = (Integer) ob;	
+		switch(i){
+		case 0:
+			resposta = "Kerolaine: Oi professor querido!";
+			break;
+		case 1:
+			resposta = "Kerolaine: Estou aqui professor!";
+			break;
+		
+		case 2:
+			resposta = "Kerolaine: Até mais!";
+			break;
+		}
+		System.out.println(resposta);
+	}
+	
+}
+
+
+package br.exemplo.Observer;
+
+public class AlunaLilian implements Observer{
+	
+	private String resposta;
+
+	@Override
+	public void update(Object ob) {
+		Integer i = (Integer) ob;	
+		switch(i){
+		case 0:
+			resposta = "Lilian: Não tem nada de bom hoje!";
+			break;
+		case 1:
+			resposta = "Lilian: Tô aqui teacher!";
+			break;
+		
+		case 2:
+			resposta = "Lilian: Até nunca!";
+			break;
+		}
+		System.out.println(resposta);
+	}
+	
+}
+
+
+package br.exemplo.Observer;
+
+public class AlunoAnderson implements Observer{
+	
+	private String resposta;
+
+	@Override
+	public void update(Object ob) {
+		Integer i = (Integer) ob;	
+		switch(i){
+		case 0:
+			resposta = "Anderson: Bom dia professor";
+			break;
+		case 1:
+			resposta = "Anderson: Presente professor!";
+			break;
+		
+		case 2:
+			resposta = "Anderson: Até logo professor!";
+			break;
+		}
+		System.out.println(resposta);
+	}
+
+}
+
+
+package br.exemplo.Observer;
+
+public class TesteObserver {
+	
+	public static void main(String[] args) {
+		Professor professor = new Professor();
+		AlunoAnderson anderson = new AlunoAnderson();
+		AlunaLilian lilian = new AlunaLilian();
+		AlunaKerolaine kerolaine = new AlunaKerolaine();
+		
+		System.out.println("Iniciando teste do Observer!\n");
+		professor.registerObserver(anderson);
+		professor.registerObserver(lilian);
+		professor.registerObserver(kerolaine);
+		
+		professor.removeObserver(anderson);
+		professor.removeObserver(lilian);
+		professor.removeObserver(kerolaine);
+		
+		professor.registerObserver(anderson);
+		professor.registerObserver(lilian);
+		professor.registerObserver(kerolaine);
+		System.out.println("Teste concluido.\nIniciando Perguntas!\n\n");
+		
+		for(int i = 0; i < 3; i++){
+			professor.proximoFrase();
+		}
+	}
+}
+
+
