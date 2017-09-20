@@ -1,0 +1,67 @@
+package br.exemplo.Adapter;
+
+public interface Bicicleta {
+	
+	public void modeloComum(String marca, String cor, int aro, boolean sinalizador);	
+  
+}
+
+
+package br.exemplo.Adapter;
+
+public class BicicletaComum implements Bicicleta{
+
+	@Override
+	public void modeloComum(String marca, String cor, int aro, boolean sinalizador) {
+		System.out.print("Minha bicicleta comum da marca " + marca + ", cor " + cor + ", tamanho do aro " + aro);
+		System.out.println(sinalizador? ", com sinalizador " : ", sem sinalizador");
+		
+	}
+
+}
+
+package br.exemplo.Adapter;
+
+public class BicicletaEletrica {
+	
+	public void modeloEletrico(String marca, String cor, int aro, String autonomia){
+		System.out.print("Vou comprar uma bicicleta eletrica da marca " + marca + ", cor " + cor + ", tamanho do aro " + aro);
+		System.out.println(", com bateria de " + autonomia);
+	}
+}
+
+
+package br.exemplo.Adapter;
+
+public class BicicletaAdapter implements Bicicleta{
+
+	private  BicicletaEletrica eletrica;
+	
+	public BicicletaAdapter(BicicletaEletrica eletrica){
+		this.eletrica = eletrica;
+	}
+	
+	@Override
+	public void modeloComum(String marca, String cor, int aro,
+			boolean sinalizador) {
+		String autonomia = "12hs";
+		eletrica.modeloEletrico(marca, cor, aro, autonomia);
+	}
+
+}
+
+package br.exemplo.Adapter;
+
+public class TesteAdapter {
+	
+	public static void main(String[] args) {
+		
+		/*BicicletaEletrica el = new BicicletaEletrica();*/
+		
+		Bicicleta bc = new BicicletaAdapter(new BicicletaEletrica());
+		bc.modeloComum("Caloi", "azul", 21,true);	
+	}
+	
+}
+
+
