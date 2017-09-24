@@ -1,0 +1,137 @@
+package classes.animais;
+
+public class Cachorro {
+	
+	public void Latir(){
+		System.out.println("Cachorro latindo!");
+	}
+	
+	public void Sentar(){
+		System.out.println("Cachorro sentado!");
+	}
+	
+	public void Rolar(){
+		System.out.println("Cachorro rolando!");
+	}
+}
+
+package classes.animais;
+
+public class Gato {
+	
+	public void miar(){
+		System.out.println("Gato miando!");
+	}
+	
+	public void Arranhar(){
+		System.out.println("Gato arranhando!");
+	}
+}
+
+package classes.animais;
+
+public class Leao {
+	
+	public void rugir(){
+		System.out.println("Leão rugindo!");
+	}
+	
+	public void Cacar(){
+		System.out.println("Leão caçando");
+	}
+}
+
+package classes.animais;
+
+public class Papagaio {
+	
+	public void emitarSom(){
+		System.out.println("Papagaio emitando som!");
+	}
+}
+
+package classes.animais;
+
+public class Tubarao {
+	
+	public void morder(){
+		System.out.println("Tubarão mordendo!");
+	}
+	
+	public void nadar(){
+		System.out.println("Tubarão nadando!");
+	}
+}
+
+package classes.animais;
+
+public class Urso {
+	
+	public void Hibernar(){
+		System.out.println("Urso hibernando!");
+	}
+}
+
+package instance.animais;
+
+import classes.animais.Cachorro;
+import classes.animais.Gato;
+import classes.animais.Leao;
+import classes.animais.Papagaio;
+import classes.animais.Tubarao;
+import classes.animais.Urso;
+
+public class Fauna {
+	private Cachorro cachorro;
+	private Gato gato;
+	private Leao leao;
+	private Papagaio papagaio;
+	private Tubarao tubarao;
+	private Urso urso;
+	
+	public Fauna(){
+		cachorro = new Cachorro();
+		gato = new Gato();
+		leao = new Leao();
+		papagaio = new Papagaio();
+		tubarao = new Tubarao();
+		urso = new Urso();
+	}
+	
+	public void animalDomestico(){
+		cachorro.Latir();
+		cachorro.Sentar();
+		cachorro.Rolar();
+		gato.miar();
+		gato.Arranhar();
+		papagaio.emitarSom();
+	}
+	
+	public void animalSelvagem(){
+		tubarao.morder();
+		tubarao.nadar();
+		leao.rugir();
+		leao.Cacar();
+		urso.Hibernar();
+	}
+}
+
+package teste.facade;
+
+import instance.animais.Fauna;
+
+public class TesteFacade {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Fauna fauna = new Fauna();
+		
+		System.out.println("Ações dos Animais Domesticos: ");
+		fauna.animalDomestico();
+		System.out.println("");
+		System.out.println("Ações dos Animais Selvagens: ");
+		fauna.animalSelvagem();
+	}
+
+}
+
