@@ -1,21 +1,88 @@
-package br.exemplo.singleton;
+ppackage br.exemplo.singleton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeuSingletonExemplo {
 	
-	private static MeuSingletonExemplo instance;//criando uma instância do tipo MeuSingletonExemplo
+	private static List<Singleton> singleton;//criando uma instância do tipo singleton
 	
 	private MeuSingletonExemplo(){// é um construtor privado, garantindo que nenhuma outra classe poderá criar inadvertidamente uma instância desta.
 	}
 	
-	public static MeuSingletonExemplo getInstance(){//utilizamos o método getInstance(), assim acessaríamos a instância criada através da chamada "MeuSingletonExemplo.getInstance()"
+	public static List<Singleton> getInstance(){//utilizamos o método getInstance(), assim acessaríamos a instância criada através da chamada "MeuSingletonExemplo.getInstance()"
 		
-		if(instance == null){//realizar um teste antes da criação do Singleton e, caso não exista nenhuma, criamos este Singleton senão retorna instance existente
-			synchronized(MeuSingletonExemplo.class){
-				if(instance == null){//Isso resolve o problema da sincronização caso tenha instancia
-				instance = new MeuSingletonExemplo();
-				}
-			}
+		if(singleton == null){//realizar um teste antes da criação do Singleton e, caso não exista nenhuma, criamos este Singleton senão retorna instance existente
+			
+			singleton = new ArrayList<Singleton>();		
 		}
-		return instance;//retornamos a instância
+		return singleton;//retornamos a instância
+	}
+
+}
+
+package br.exemplo.singleton;
+
+
+public class Singleton {
+	
+	private MeuSingletonExemplo instance;
+	private String nome;
+
+	public Singleton(MeuSingletonExemplo instance, String nome) {
+		super();
+		this.instance = instance;
+		this.nome = nome;
+	}
+	
+	public Singleton(){
+		
+	}
+
+	public MeuSingletonExemplo getInstance() {
+		return instance;
+	}
+
+	public void setInstance(MeuSingletonExemplo instance) {
+		this.instance = instance;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+}
+
+package br.exemplo.singleton;
+
+public class TesteSingleton {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		Singleton singleton1 = new Singleton();
+		singleton1.setNome("Anderson");
+		
+		Singleton singleton2 = new Singleton();
+		singleton2.setNome("Lilian");
+		
+		Singleton singleton3 = new Singleton();
+		singleton3.setNome("Kerolaine");
+		
+		MeuSingletonExemplo.getInstance().add(singleton1);
+		MeuSingletonExemplo.getInstance().add(singleton2);
+		MeuSingletonExemplo.getInstance().add(singleton3);
+		
+		
+		for(Singleton s:MeuSingletonExemplo.getInstance()){
+			
+		System.out.println("Nome do primeiro aluno " + s.getNome());
+		}
+	
 	}
 }
